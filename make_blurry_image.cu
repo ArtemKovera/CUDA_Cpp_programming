@@ -39,7 +39,7 @@ __global__ void makeBlurryImage(unsigned char * arr, const size_t imageHeight, c
     
     //printf("index = %d\n", index);
     //read and compute value
-    unsigned char temp = (arr[index] + arr[index + 3] + arr[index - 3] + 
+    unsigned int temp = (arr[index] + arr[index + 3] + arr[index - 3] + 
                          arr[index - imageWidth * 3] + arr[index - (imageWidth-1) * 3] + arr[index - (imageWidth+1) * 3] +
                          arr[index + imageWidth * 3] + arr[index + (imageWidth-1) * 3] + arr[index + (imageWidth+1) * 3])/9 ;
     
@@ -49,7 +49,7 @@ __global__ void makeBlurryImage(unsigned char * arr, const size_t imageHeight, c
     //printf("index = %d; value = %d\n", index, temp);
 
     //write computed value
-    arr[index] = temp;
+    arr[index] = static_cast<unsigned char>(temp);
     
      
     //for debug
