@@ -20,7 +20,7 @@ __global__ void makeBlurryImage(unsigned char * arr, const size_t imageHeight, c
 
 
     //get index
-    int index = threadIdx.x * blockIdx.x;
+    int index = blockIdx.x * blockDim.x + threadIdx.x;
 
     //exclude top and bottom pixels from blurring 
     if(index <= imageWidth * 3 && index >= imageWidth * 3 * (imageHeight - 1)) 
@@ -120,8 +120,11 @@ int main(int argc, char ** argv)
         cudaGetErrorString(error);
         return 1;
     }
+
+    dim3 blocksPerGrid(IMAGE_HEIGHT*3, 1, 1);
+    dim3 threadsPerBlock(IMAGE_WIDTH, 1, 1);
     
-    makeBlurryImage<<<IMAGE_HEIGHT * 3, IMAGE_WIDTH>>>((unsigned char*)d_img, IMAGE_HEIGHT, IMAGE_WIDTH);
+    makeBlurryImage<<<blocksPerGrid, threadsPerBlock>>>((unsigned char*)d_img, IMAGE_HEIGHT, IMAGE_WIDTH);
 
     cudaError_t err = cudaGetLastError();
     if ( err != cudaSuccess )
