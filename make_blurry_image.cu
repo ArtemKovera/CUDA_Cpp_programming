@@ -9,7 +9,7 @@
 
 #define IMAGE_HEIGHT 256
 #define IMAGE_WIDTH  256
-
+#define NUMBER_OF_CHANNELS 3
 #define OFFSET 54
 
 using namespace std;
@@ -121,7 +121,7 @@ int main(int argc, char ** argv)
         return 1;
     }
 
-    dim3 blocksPerGrid(IMAGE_HEIGHT*3, 1, 1);
+    dim3 blocksPerGrid(IMAGE_HEIGHT*NUMBER_OF_CHANNELS, 1, 1);
     dim3 threadsPerBlock(IMAGE_WIDTH, 1, 1);
     
     makeBlurryImage<<<blocksPerGrid, threadsPerBlock>>>((unsigned char*)d_img, IMAGE_HEIGHT, IMAGE_WIDTH);
@@ -164,13 +164,13 @@ int main(int argc, char ** argv)
         std::cout << "Output file has been written" << std::endl;
     }     
     
-    
-    
     cudaFree(d_img);    
-
-    
     delete [] buffer;
     delete [] imgResult;
+
+    d_img = nullptr;
+    buffer = nullptr;
+    imgResult = nullptr;
 
     return 0;
 }
