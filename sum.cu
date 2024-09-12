@@ -55,14 +55,14 @@ int main()
     if(error != cudaSuccess)
     {
         std::cerr << "Failure of GPU memory allocation for d_arr" << std::endl;
-        cudaGetErrorString(error);
+        std::cout << cudaGetErrorString(error) << std::endl;
         return 1;
     }
     error = cudaMalloc((void**)&d_total_p, sizeof(unsigned int));
     if(error != cudaSuccess)
     {
         std::cerr << "Failure of GPU memory allocation for d_total_p" << std::endl;
-        cudaGetErrorString(error);
+        std::cout << cudaGetErrorString(error) << std::endl;
         return 1;
     } 
     
@@ -70,7 +70,7 @@ int main()
     if(error != cudaSuccess)
     {
         std::cerr << "Failure of transforing memory from host to GPU for d_arr" << std::endl;
-        cudaGetErrorString(error);
+        std::cout << cudaGetErrorString(error) << std::endl;
         return 1;
     } 
     error = cudaMemcpy(d_total_p, &d_total, sizeof(unsigned int), cudaMemcpyHostToDevice);
@@ -78,7 +78,7 @@ int main()
     if(error != cudaSuccess)
     {
         std::cerr << "Failure of transforing memory from host to GPU for d_total_p" << std::endl;
-        cudaGetErrorString(error);
+        std::cout << cudaGetErrorString(error) << std::endl;
         return 1;
     } 
     
@@ -91,7 +91,7 @@ int main()
     if(error != cudaSuccess)
     {
         std::cerr << "Failure of transforing memory from GPU to host for d_total" << std::endl;
-        cudaGetErrorString(error);
+        std::cout << cudaGetErrorString(error) << std::endl;
         return 1;
     }     
 
