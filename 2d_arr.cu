@@ -16,7 +16,7 @@ int main()
    dim3 threads (3, 2, 1);
    float * d_arr; 
 
-   cudaError_t error = cudaMalloc((void **)&d_arr, 24 * sizeof(int));   
+   cudaError_t error = cudaMalloc((void **)&d_arr, 24 * sizeof(float));   
    if(error != cudaSuccess)
    {
        std::cerr << "Failure of GPU memory allocation for d_arr" << std::endl;
